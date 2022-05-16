@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./app.js"></script>
+    </head>
+    <body>
+        <p>
+            <button onclick="window.open(
+            '?',
+            (()=>([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,a=>(a^Math.random()*16>>a/4).toString(16)))(),
+            'resizable=yes,scrollbars=yes,dependent=yes,width=400,height=200'
+            )">+++</button>
+        </p>
+
+        <p>
+            A
+            <input data-key="A" type="text" value="" onKeyUp="console.log(event);messenger.send(this.value,'A')">
+        </p>
+
+        <p>
+            B
+            <input data-key="B" type="text" value="" onKeyUp="console.log(event);messenger.send(this.value,'B')">
+        </p>
+
+        <script>
+        var messenger = new Messenger('general')
+        messenger.subscribe('A')
+        messenger.subscribe('B')
+        messenger.onMessage(function(message,channel){
+            //console.log({message,channel});
+            var el = document.querySelector('input[data-key="'+channel+'"]')
+            if(el)
+                el.value=message;
+
+        });
+        messenger.send('welcome','general');
+        </script>
+    </body>
+</html>

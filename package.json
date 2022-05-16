@@ -1,0 +1,28 @@
+{
+  "name": "js-class.messenger",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://github.com/ldbglobe/js-class.messenger",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldbglobe/js-class.messenger.git"
+  },
+  "main": "src/index.js",
+  "dependencies": {
+    "js-class.event-dispatcher": "^1.0.0"
+  },
+  "scripts": {
+    "start-example": "cd example && webpack serve",
+    "build-example": "cd example && webpack"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.5",
+    "copy-webpack-plugin": "^10.2.4",
+    "terser-webpack-plugin": "^5.3.1",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
+  }
+}
