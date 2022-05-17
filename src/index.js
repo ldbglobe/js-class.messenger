@@ -60,7 +60,7 @@ export default class Messenger {
 		if(data.format === 'messenger')
 		{
 			// relay all channel on other windows
-			this.send(data.message,data.channel,e.source)
+			this.send(data.message,data.channel,e.source,true)
 
 			// fire local event if channel is subscribed
 			if(this.channels.has(data.channel))
@@ -70,10 +70,11 @@ export default class Messenger {
 		}
 	}
 
-	send(message,destinationChannel=null,emiter=null) {
+	send(message,destinationChannel=null,emiter=null,relay=false) {
 		if(destinationChannel && !this.channels.has(destinationChannel))
 		{
-			throw `Messenger.send not subscribed to ${destinationChannel}`
+			if(!relay)
+				throw `Messenger.send not subscribed to ${destinationChannel}`
 		}
 		else
 		{
