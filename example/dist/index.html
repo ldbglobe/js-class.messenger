@@ -7,33 +7,38 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="./app.js"></script>
+        <link rel="stylesheet" type="text/css" href="./app.css">
     </head>
     <body>
         <p>
-            <button onclick="window.open(
-            '?',
-            (()=>([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,a=>(a^Math.random()*16>>a/4).toString(16)))(),
-            'resizable=yes,scrollbars=yes,dependent=yes,width=400,height=200'
-            )">+++</button>
+            <button onclick="openChild()">Open a dependent window</button>
         </p>
 
-        <p>
-            A
-            <input data-key="A" type="text" value="" onKeyUp="console.log(event);messenger.send(this.value,'A')">
-        </p>
+        <div>
+            <label>Channel A <em>(type here and the texte will be send across the windows)</em></label>
+            <textarea data-key="A" onKeyUp="console.log(event);messenger.send(this.value,'A')"></textarea>
+        </div>
 
-        <p>
-            B
-            <input data-key="B" type="text" value="" onKeyUp="console.log(event);messenger.send(this.value,'B')">
-        </p>
+        <div>
+            <label>Channel B <em>(type here and the texte will be send across the windows)</em></label>
+            <textarea data-key="B" onKeyUp="console.log(event);messenger.send(this.value,'B')"></textarea>
+        </div>
 
         <script>
-        var messenger = new Messenger('general')
+        function openChild() {
+            window.open(
+                '?',
+                (()=>([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,a=>(a^Math.random()*16>>a/4).toString(16)))(),
+                'resizable=yes,scrollbars=yes,dependent=yes,width=500,height=250'
+            );
+        }
+
+        var messenger = new Messenger({channel:'general'}) // subscribe to "general" as default channel
         messenger.subscribe('A')
         messenger.subscribe('B')
         messenger.onMessage(function(message,channel){
             //console.log({message,channel});
-            var el = document.querySelector('input[data-key="'+channel+'"]')
+            var el = document.querySelector('textarea[data-key="'+channel+'"]')
             if(el)
                 el.value=message;
 
