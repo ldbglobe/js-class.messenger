@@ -16,12 +16,12 @@
 
         <div>
             <label>Channel A <em>(type here and the texte will be send across the windows)</em></label>
-            <textarea data-key="A" onKeyUp="console.log(event);messenger.send(this.value,'A')"></textarea>
+            <textarea data-key="A" onKeyUp="messenger.send(this.value,'A')"></textarea>
         </div>
 
         <div>
             <label>Channel B <em>(type here and the texte will be send across the windows)</em></label>
-            <textarea data-key="B" onKeyUp="console.log(event);messenger.send(this.value,'B')"></textarea>
+            <textarea data-key="B" onKeyUp="messenger.send(this.value,'B')"></textarea>
         </div>
 
         <script>
@@ -36,13 +36,19 @@
         var messenger = new Messenger({channel:'general'}) // subscribe to "general" as default channel
         messenger.subscribe('A')
         messenger.subscribe('B')
+
+        // listener on all subscribed channel
+        messenger.onMessage(function(message,channel){ console.log("ALL",{message,channel}); });
+        // listener on channel A & B
         messenger.onMessage(function(message,channel){
             //console.log({message,channel});
             var el = document.querySelector('textarea[data-key="'+channel+'"]')
             if(el)
                 el.value=message;
 
-        });
+        },['A','B']);
+        // listener on "general" channel
+        messenger.onMessage(function(message,channel){ console.log("GENERAL",{message,channel}); },'general');
         messenger.send('welcome','general');
         </script>
     </body>

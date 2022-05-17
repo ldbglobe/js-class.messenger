@@ -46,14 +46,14 @@ export default class Messenger {
 		this.channels.delete(channel)
 	}
 
-	onMessage(callback) {
-		this.events.registerEvent('message',function(data,eventSource) {
-			callback(data.message,data.channel)
-		})
+	onMessage(callback,channels=null) {
+		channels = typeof channels === "string" ? [channels] : channels;
+		channels = channels && channels.length ? channels : [];
+		this.events.registerEvent('message',function(callback, channels, data, eventSource) {
+			if(channels.length===0 || channels.includes(data.channel))
+				callback(data.message,data.channel)
+		}.bind(this, callback, channels))
 	}
-
-	on(eventName,callback) { this.events.registerEvent(eventName,callback) }
-	off(eventName,callback) { this.events.unregisterEvent(eventName,callback) }
 
 	__handleMessage(e) {
 		let data = typeof e.data === "string" ? JSON.parse(e.data) : (e.data || {});
