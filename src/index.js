@@ -96,7 +96,7 @@ export default class Messenger {
 			}
 			else
 			{
-				throw `Messenger.send no destination channels available`
+				// No destination channels available, Nothing to do ^^
 			}
 		}
 	}
