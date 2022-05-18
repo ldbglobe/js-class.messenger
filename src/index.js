@@ -56,7 +56,15 @@ export default class Messenger {
 	}
 
 	__handleMessage(e) {
-		let data = typeof e.data === "string" ? JSON.parse(e.data) : (e.data || {});
+
+		let data = {}
+		try {
+			data = typeof e.data === "string" ? JSON.parse(e.data) : (e.data || {});
+		}
+		catch {
+			// nothing to do;
+		}
+
 		if(data.format === 'messenger')
 		{
 			// relay all channel on other windows
