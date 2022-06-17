@@ -1,16 +1,5 @@
 import EventDispatcher from "js-class.event-dispatcher";
 
-window.MessengerWelcome_260b9b39071b9918 = function(w=null)
-{
-	if(w)
-		Messenger.___.recipients.add(w)
-	else
-	{
-		if(window.opener && typeof window.opener.MessengerWelcome_260b9b39071b9918 === "function")
-			window.opener.MessengerWelcome_260b9b39071b9918(window);
-	}
-}
-
 export default class Messenger {
 
 	static ___ = {
@@ -31,8 +20,10 @@ export default class Messenger {
 
 		this.events = new EventDispatcher(this);
 		window.addEventListener('message', this.__handleMessage.bind(this))
+	}
 
-		window.MessengerWelcome_260b9b39071b9918();
+	addRecipient(recipientWindow) {
+		Messenger.___.recipients.add(recipientWindow)
 	}
 
 	subscribe(channel) {
