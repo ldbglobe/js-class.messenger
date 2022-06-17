@@ -25,15 +25,17 @@
         </div>
 
         <script>
+        var messenger = new Messenger({channel:'general'}) // subscribe to "general" as default channel
+
         function openChild() {
-            window.open(
+            var w = window.open(
                 '?',
                 (()=>([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,a=>(a^Math.random()*16>>a/4).toString(16)))(),
                 'resizable=yes,scrollbars=yes,dependent=yes,width=500,height=250'
             );
+            messenger.addRecipient(w)
         }
 
-        var messenger = new Messenger({channel:'general'}) // subscribe to "general" as default channel
         messenger.subscribe('A')
         messenger.subscribe('B')
 
